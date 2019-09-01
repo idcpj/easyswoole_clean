@@ -31,10 +31,12 @@ class EasySwooleEvent implements Event
         /**
         这里注册的名字叫mysql，你可以注册多个，比如mysql2,mysql3
          */
-        $poolConf = Mysql::getInstance()->register('mysql',$config);
-        //$poolConf->setMaxObjectNum($configData['maxObjectNum']);
-        //$poolConf->setMinObjectNum($configData['minObjectNum']);
-    }
+        Mysql::getInstance()->register('mysql',$config);
+
+        \App\Utility\utils::includeConfig();
+
+        //print_r(GConfig::getInstance()->getConf("MYSQL"));
+}
 
     public static function mainServerCreate(EventRegister $register)
     {

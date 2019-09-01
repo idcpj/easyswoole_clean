@@ -27,14 +27,5 @@ return [
     ],
     'TEMP_DIR' => null,
     'LOG_DIR' => null,
-    'MYSQL'         => [
-        'host'                 => '127.0.0.1',
-        'port'                 => 3306,
-        'user'                 => 'root',
-        'password'             => '12345678',
-        'database'             => 'demo',
-        'timeout'              => 30,
-        'charset'              => 'utf8mb4',
-        'connect_timeout'      => '5',//连接超时时间
-    ],
+
 ];
