@@ -6,7 +6,6 @@ namespace App\Lib\Upload;
 use App\Lib\Log;
 use App\Lib\Utils;
 use EasySwoole\Http\Request;
-use function FastRoute\TestFixtures\empty_options_cached;
 
 class Base{
     private $request;
@@ -37,7 +36,7 @@ class Base{
         //'x-flv',
     ];
 
-    public function __construct(Request $request ){
+    public function __construct(Request $request,$type='' ){
         $this->request=$request;
         /**
          * $files
@@ -51,9 +50,14 @@ class Base{
                 )
              )
          */
-        $files= $this->request->getSwooleRequest()->files;
-        $types=array_keys($files);
-        $this->key= $types[0];
+        if(empty($type)){
+            $files= $this->request->getSwooleRequest()->files;
+            $types=array_keys($files);
+            $this->key= $types[0];
+        }else{
+            $this->key=$type;
+        }
+
     }
 
     public function upload(){

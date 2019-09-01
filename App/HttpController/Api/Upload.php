@@ -4,7 +4,6 @@
 
     use App\HttpController\Base;
     use App\Lib\ClassArr;
-    use App\Lib\Upload\Video;
 
     /**
      *  http://localhost:9501/api/upload/file/
@@ -22,7 +21,7 @@
             }
             try{
                 $classArr = new ClassArr();
-                $uploadObj = $classArr->initClass($type, ClassArr::uploadClassStat(),[$request]);
+                $uploadObj = $classArr->initClass($type, ClassArr::uploadClassStat(),[$request,$type]);
                 $filePath = $uploadObj->upload();
             } catch (\Exception $e){
                 return $this->writeJson(400,$e->getMessage());
