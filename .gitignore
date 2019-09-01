@@ -5,6 +5,7 @@
 /Log/
 /Temp/
 /Temp2/
+/webroot/upload/
 /easyswoole
 
 dev.env
