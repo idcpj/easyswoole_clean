@@ -9,14 +9,13 @@
 namespace App\HttpController\Api;
 
 
-use EasySwoole\EasySwoole\Core;
+use App\Lib\upload\Base;
 use EasySwoole\EasySwoole\ServerManager;
 use EasySwoole\EasySwoole\Trigger;
-use EasySwoole\Http\AbstractInterface\Controller;
 use EasySwoole\Http\Message\Status;
 use EasySwoole\Validate\Validate;
 
-abstract class ApiBase extends Controller
+abstract class ApiBase extends Base
 {
     function index()
     {
