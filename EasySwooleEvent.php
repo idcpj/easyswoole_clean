@@ -25,7 +25,7 @@ class EasySwooleEvent implements Event
     public static function initialize()
     {
         date_default_timezone_set('Asia/Shanghai');
-
+        \App\Utility\utils::includeConfig();
         $configData = GConfig::getInstance()->getConf('MYSQL');
         $config = new Config($configData);
         /**
@@ -33,7 +33,6 @@ class EasySwooleEvent implements Event
          */
         Mysql::getInstance()->register('mysql',$config);
 
-        \App\Utility\utils::includeConfig();
 
         //print_r(GConfig::getInstance()->getConf("MYSQL"));
 }

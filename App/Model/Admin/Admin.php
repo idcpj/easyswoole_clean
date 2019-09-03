@@ -6,7 +6,7 @@ namespace App\Model\Admin;
  * Class AdminModel
  * Create With Automatic Generator
  */
-class AdminModel extends \App\Model\BaseModel
+class Admin extends \App\Model\Base
 {
     protected $table = 'admin_list';
 

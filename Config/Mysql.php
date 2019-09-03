@@ -5,7 +5,7 @@ return [
     'port'                 => 3306,
     'user'                 => 'root',
     'password'             => '12345678',
-    'database'             => 'demo',
+    'database'             => 'easyswoole',
     'timeout'              => 30,
     'charset'              => 'utf8mb4',
     'connect_timeout'      => '5',//连接超时时间

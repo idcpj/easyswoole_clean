@@ -6,7 +6,7 @@ namespace App\Model\Admin;
  * Class BannerModel
  * Create With Automatic Generator
  */
-class BannerModel extends \App\Model\BaseModel
+class Banner extends \App\Model\Base
 {
     protected $table = 'banner_list';
 

@@ -7,7 +7,7 @@
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
 ### 上传文件接口
-POST http://127.0.0.1:9501/api/upload/file?a=12
+POST http://localhost:9501/api/upload/file?a=12
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -15,6 +15,12 @@ Content-Disposition: form-data; name="file"; filename="tmp.mp4"
 
 < /Users/idcpj/Web/easyswoole/Doc/tmp.mp4
 --WebAppBoundary--
+
+### 文件信息上传
+POST http://localhost:9501/api/video/add
+Content-Type: application/x-www-form-urlencoded
+
+name=cpj&image=11&url=asdsadas&content=conent_asdasd&cat_id=1123&type=1
 
 ###
 

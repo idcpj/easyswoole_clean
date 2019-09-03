@@ -6,7 +6,7 @@ namespace App\Model\User;
  * Class UserModel
  * Create With Automatic Generator
  */
-class UserModel extends \App\Model\BaseModel
+class User extends \App\Model\Base
 {
     protected $table = 'user_list';
 
