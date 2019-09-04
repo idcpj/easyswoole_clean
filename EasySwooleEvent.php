@@ -17,7 +17,7 @@ use EasySwoole\Http\Response;
 use EasySwoole\EasySwoole\Config as GConfig;
 use EasySwoole\MysqliPool\Mysql;
 use EasySwoole\Mysqli\Config;
-use  App\Utility\Pool\MysqlPool;
+use App\Utility\Pool\MysqlPool;
 
 class EasySwooleEvent implements Event
 {
@@ -41,6 +41,18 @@ class EasySwooleEvent implements Event
     {
 
         PoolManager::getInstance()->register(MysqlPool::class);
+
+        $register->add(EventRegister::onWorkerStart, function (\swoole_server $server, $workerId) {
+            //只在第一个进程执行,这样只触发一次
+            //dev.php 中 'worker_num' => 80, 确定了进程数
+            if ($workerId == 0) {
+                \EasySwoole\Component\Timer::getInstance()->loop(10 * 1000, function () use ($workerId){
+                    echo $workerId."\n";
+                });
+            }
+        });
+
+
 
     }
 
