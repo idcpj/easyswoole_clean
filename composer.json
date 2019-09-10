@@ -2,7 +2,8 @@
     "require": {
         "easyswoole/easyswoole": "3.x",
         "easyswoole/mysqli": "^1.2",
-        "easyswoole/mysqli-pool": "^1.0"
+        "easyswoole/mysqli-pool": "^1.0",
+        "easyswoole/fast-cache": "^1.2"
     },
     "autoload": {
         "psr-4": {

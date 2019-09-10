@@ -3,13 +3,19 @@
 
 
     use EasySwoole\Component\Di;
+    use EasySwoole\FastCache\Cache;
 
+    /**
+     * curl http://127.0.0.1:9501/index.php
+     * Class Index
+     * @package App\HttpController
+     */
     class Index extends Base{
 
         public function index(){
-            /** @var \EasySwoole\MysqliPool\Connection $db */
-            Di::getInstance()->get("redis")->set("a", "b");
-            print_r(Di::getInstance()->get("redis")->get("a"));
-            return $this->writeJson('11','111','');
+            echo"asd1";
+            //Cache::getInstance()->set("asd", "aa");
+            var_dump(Cache::getInstance()->get("asd"));
+            return $this->writeJson(200,"asd3");
         }
     }
