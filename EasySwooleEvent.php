@@ -9,6 +9,8 @@
 namespace EasySwoole\EasySwoole;
 
 
+use App\Utility\Invoker;
+use App\Utility\InvokerDriver;
 use EasySwoole\Component\Pool\PoolManager;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
@@ -52,6 +54,8 @@ class EasySwooleEvent implements Event
 
         self::Cache();
         self::hotReload();
+
+        Invoker::getInstance(new InvokerDriver())->attachServer(ServerManager::getInstance()->getSwooleServer());
 
     }
 

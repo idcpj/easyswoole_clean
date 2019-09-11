@@ -3,7 +3,9 @@
         "easyswoole/easyswoole": "3.x",
         "easyswoole/mysqli": "^1.2",
         "easyswoole/mysqli-pool": "^1.0",
-        "easyswoole/fast-cache": "^1.2"
+        "easyswoole/fast-cache": "^1.2",
+        "elasticsearch/elasticsearch": "~6.0",
+        "easyswoole/sync-invoker": "^1.0"
     },
     "autoload": {
         "psr-4": {
