@@ -22,5 +22,27 @@ Content-Type: application/x-www-form-urlencoded
 
 name=cpj&image=11&url=asdsadas&content=conent_asdasd&cat_id=1123&type=1
 
-###
+### elasticsearch 聚合查询
 
+## 添加数据
+curl -X POST -H 'Content-Type: application/json' http://127.0.0.1:9200/video1/video/ -d'
+{
+"name":"aaa",
+"id":
+}
+'
+
+
+#查询数据
+curl -X GET -H 'Content-Type: application/json' http://127.0.0.1:9200/video1/video/_search -d'
+{
+"size":0,
+ "aggs":{
+    "xin_name":{
+      "terms":{
+        "field":"cat_id"
+      }
+    }
+ }
+}
+'

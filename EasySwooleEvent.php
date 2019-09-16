@@ -9,8 +9,10 @@
 namespace EasySwoole\EasySwoole;
 
 
+use App\Lib\Log;
 use App\Utility\Invoker;
 use App\Utility\InvokerDriver;
+use EasySwoole\Component\Di;
 use EasySwoole\Component\Pool\PoolManager;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
@@ -30,6 +32,9 @@ class EasySwooleEvent implements Event
 
     public static function initialize()
     {
+
+
+
         date_default_timezone_set('Asia/Shanghai');
         \App\Utility\utils::includeConfig();
         $configData = GConfig::getInstance()->getConf('MYSQL');
