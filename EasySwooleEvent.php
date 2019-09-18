@@ -16,6 +16,7 @@ use EasySwoole\Component\Di;
 use EasySwoole\Component\Pool\PoolManager;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
+use EasySwoole\EasySwoole\Task\TaskManager;
 use EasySwoole\FastCache\Cache;
 use EasySwoole\Http\Request;
 use EasySwoole\Http\Response;
@@ -47,6 +48,7 @@ class EasySwooleEvent implements Event
 
         //print_r(GConfig::getInstance()->getConf("MYSQL"));
 
+        self::Event();
 }
 
     public static function mainServerCreate(EventRegister $register)
@@ -194,6 +196,23 @@ class EasySwooleEvent implements Event
             ServerManager::getInstance()->getSwooleServer()->addProcess((new \App\Process\Test($processConfig))->getProcess());
         }
 
+    }
+
+    public  static function Event(){
+        \App\Event\Event::getInstance()->set('test', function ($arg,$arg1) {
+            echo "test event:{$arg},{$arg1}\n";
+        });
+        \App\Event\Event::getInstance()->set('test2', function ($arg,$arg1) {
+            echo "test event:{$arg},{$arg1}\n";
+        });
+
+        //别处调用
+        \App\Event\Event::getInstance()->hook('test','123','222');
+        //删除 test2 的hook
+        \App\Event\Event::getInstance()->delete('test2');
+        //清空所有 hook
+        //\App\Event\Event::getInstance()->clear();
+        \App\Event\Event::getInstance()->hook('test2','abc','def');
     }
 
 }
