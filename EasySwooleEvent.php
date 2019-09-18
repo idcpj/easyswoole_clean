@@ -59,6 +59,7 @@ class EasySwooleEvent implements Event
 
         self::Cache();
         self::hotReload();
+        self::tcp();
 
         Invoker::getInstance(new InvokerDriver())->attachServer(ServerManager::getInstance()->getSwooleServer());
 
@@ -152,6 +153,33 @@ class EasySwooleEvent implements Event
     private static function hotReload(): void{
         $swooleServer = ServerManager::getInstance()->getSwooleServer();
         $swooleServer->addProcess((new \App\Process\HotReload('HotReload', ['disableInotify' => true]))->getProcess());
+    }
+
+    public static function tcp(){
+        $server = ServerManager::getInstance()->getSwooleServer();
+
+        ################# tcp 服务器1 没有处理粘包 #####################
+        $subPort1 = $server->addlistener('0.0.0.0', 9502, SWOOLE_TCP);
+        $subPort1->set(
+            [
+                'open_length_check' => false,//不验证数据包
+            ]
+        );
+        $subPort1->on('connect', function (\swoole_server $server, int $fd, int $reactor_id) {
+            echo "tcp服务1  fd:{$fd} 已连接\n";
+            $str = '恭喜你连接成功服务器1';
+            $server->send($fd, $str);
+        });
+        $subPort1->on('close', function (\swoole_server $server, int $fd, int $reactor_id) {
+            echo "tcp服务1  fd:{$fd} 已关闭\n";
+        });
+        $subPort1->on('receive', function (\swoole_server $server, int $fd, int $reactor_id, string $data) {
+            $server = ServerManager::getInstance()->getSwooleServer();
+            $fdinfo = $server->getClientInfo($fd);
+            var_dump($fdinfo);
+            echo "tcp服务1  fd:{$fd} 发送消息:{$data}\n";
+            $server->send($fd, "接受到你的 data {$data}");
+        });
     }
 
 }
