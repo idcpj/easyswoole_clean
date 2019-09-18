@@ -60,6 +60,7 @@ class EasySwooleEvent implements Event
         self::Cache();
         self::hotReload();
         self::tcp();
+        self::Process();
 
         Invoker::getInstance(new InvokerDriver())->attachServer(ServerManager::getInstance()->getSwooleServer());
 
@@ -180,6 +181,19 @@ class EasySwooleEvent implements Event
             echo "tcp服务1  fd:{$fd} 发送消息:{$data}\n";
             $server->send($fd, "接受到你的 data {$data}");
         });
+    }
+
+    protected static function Process(){
+        $processConfig = new \EasySwoole\Component\Process\Config();
+        $processConfig->setProcessName("testProcess");
+        $processConfig->setArg([
+            'arg'=>time(),
+        ]);
+        //可开多个进程
+        for ($i=0; $i < 3; $i++) {
+            ServerManager::getInstance()->getSwooleServer()->addProcess((new \App\Process\Test($processConfig))->getProcess());
+        }
+
     }
 
 }
