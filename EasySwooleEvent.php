@@ -65,6 +65,7 @@ class EasySwooleEvent implements Event
         self::tcp();
         self::Process();
         self::crontab();
+        self::LogHook();
 
         Invoker::getInstance(new InvokerDriver())->attachServer(ServerManager::getInstance()->getSwooleServer());
 
@@ -220,6 +221,14 @@ class EasySwooleEvent implements Event
     public  static function crontab(){
         // 开始一个定时任务计划
         Crontab::getInstance()->addTask(\App\Crontab\TaskOne::class);
+    }
+
+    public static function LogHook(){
+        Logger::getInstance()->onLog()->set('myHook',function ($msg,$logLevel,$category){
+            //增加日志写入之后的回调函数
+            var_dump(sprintf("category : %s , logLevel : %s , msg : %s", $category,$logLevel,$msg));
+        });
+
     }
 
 }
