@@ -14,6 +14,7 @@ use App\Utility\Invoker;
 use App\Utility\InvokerDriver;
 use EasySwoole\Component\Di;
 use EasySwoole\Component\Pool\PoolManager;
+use EasySwoole\Component\TableManager;
 use EasySwoole\EasySwoole\Crontab\Crontab;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
@@ -28,6 +29,7 @@ use App\Utility\Pool\MysqlPool;
 use EasySwoole\FastCache\CacheProcessConfig;
 use EasySwoole\FastCache\SyncData;
 use EasySwoole\Utility\File;
+use Swoole\Table;
 
 class EasySwooleEvent implements Event
 {
@@ -66,6 +68,7 @@ class EasySwooleEvent implements Event
         self::Process();
         self::crontab();
         self::LogHook();
+        self::Table();
 
         Invoker::getInstance(new InvokerDriver())->attachServer(ServerManager::getInstance()->getSwooleServer());
 
@@ -229,6 +232,32 @@ class EasySwooleEvent implements Event
             var_dump(sprintf("category : %s , logLevel : %s , msg : %s", $category,$logLevel,$msg));
         });
 
+    }
+
+    public static function Table(){
+        TableManager::getInstance()->add(
+            "test",
+            [
+                'Num'=>['type'=>Table::TYPE_INT,'size'=>2],
+                'Num2'=>['type'=>Table::TYPE_INT,'size'=>2],//似乎 size 不管等于几, 都是 4,size 带有符号
+                'str'=>['type'=>Table::TYPE_STRING,'size'=>8],//字符串长度的等于实际长度,最小设置 8,最大10 个字符
+            ],
+            1024
+        );
+        $table = TableManager::getInstance()->get("test");
+        $table->set(1, ['Num'=>2,'Num2'=>2147483647,'str'=>'1234567890']);//最大 2147483647
+        $table->set(2, ['Num'=>1,'Num2'=>1,'str'=>'1']);//最大 2147483648
+        $table->incr('1', 'Num',1);// 默认自增 1
+        $table->del(2); // 删除 del
+        var_dump($table->exist(2)); // key 1 是否存在  bool
+        var_dump("TableManager : ",$table->get(1));
+        /**
+         * array(2) {
+            ["Num"]=>int(3)
+            ["Num2"]=>int(2147483647)
+            ["str"]=>string(8) "12345678"
+          }
+         */
     }
 
 }
