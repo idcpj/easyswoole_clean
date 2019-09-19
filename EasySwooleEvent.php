@@ -14,6 +14,7 @@ use App\Utility\Invoker;
 use App\Utility\InvokerDriver;
 use EasySwoole\Component\Di;
 use EasySwoole\Component\Pool\PoolManager;
+use EasySwoole\EasySwoole\Crontab\Crontab;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
 use EasySwoole\EasySwoole\Task\TaskManager;
@@ -63,6 +64,7 @@ class EasySwooleEvent implements Event
         self::hotReload();
         self::tcp();
         self::Process();
+        self::crontab();
 
         Invoker::getInstance(new InvokerDriver())->attachServer(ServerManager::getInstance()->getSwooleServer());
 
@@ -193,7 +195,7 @@ class EasySwooleEvent implements Event
         ]);
         //可开多个进程
         for ($i=0; $i < 3; $i++) {
-            ServerManager::getInstance()->getSwooleServer()->addProcess((new \App\Process\Test($processConfig))->getProcess());
+            //ServerManager::getInstance()->getSwooleServer()->addProcess((new \App\Process\Test($processConfig))->getProcess());
         }
 
     }
@@ -213,6 +215,11 @@ class EasySwooleEvent implements Event
         //清空所有 hook
         //\App\Event\Event::getInstance()->clear();
         \App\Event\Event::getInstance()->hook('test2','abc','def');
+    }
+
+    public  static function crontab(){
+        // 开始一个定时任务计划
+        Crontab::getInstance()->addTask(\App\Crontab\TaskOne::class);
     }
 
 }
