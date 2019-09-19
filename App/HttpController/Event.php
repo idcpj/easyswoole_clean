@@ -8,7 +8,7 @@
          */
         public function index(){
 
-            \App\Event\Event::getInstance()->hook('test');
+            \App\Event\Event::getInstance()->hook('test','123','222');
             $this->writeJson(200,'hello word');
         }
     }
