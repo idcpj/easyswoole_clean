@@ -4,7 +4,7 @@
 
     class Event extends Base{
         /**
-         * curl http://127.0.0.1:9502/event
+         * curl http://127.0.0.1:9501/event
          */
         public function index(){
 
